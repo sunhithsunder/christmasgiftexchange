@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christmas Gift Exchange</title>
+</head>
+<body>
+    <h1>Christmas Gift Exchange</h1>
+    <form method="POST" action="/add_name">
+        <input type="text" name="name" placeholder="Enter a name" required>
+        <button type="submit">Add Name</button>
+    </form>
+    <h2>Names:</h2>
+    <ul>
+        {% for name in names %}
+        <li>{{ name }}</li>
+        {% endfor %}
+    </ul>
+    <form method="POST" action="/assign_recipient">
+        <select name="giver">
+            {% for name in names if name not in assigned_recipients %}
+            <option value="{{ name }}">{{ name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Assign Recipient</button>
+    </form>
+    <h2>Assigned Recipients:</h2>
+    <ul>
+        {% for giver, recipient in assigned_recipients.items() %}
+        <li>{{ giver }} will give a gift to {{ recipient }}</li>
+        {% endfor %}
+    </ul>
+    <form method="POST" action="/reset">
+        <button type="submit">Reset Game</button>
+    </form>
+</body>
+</html>
